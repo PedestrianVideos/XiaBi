@@ -521,6 +521,7 @@ public class HomeFragmentActivity extends AppCompatActivity implements View.OnCl
             }else {
                 setTabSelection(getString(R.string.challenge));
                 isBack = false;
+                //
                 return true;
             }
         }
