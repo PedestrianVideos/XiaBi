@@ -4,7 +4,7 @@
     android:id="@+id/activity_home_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="newbula.com.xing.ui.homepage.HomeFragmentActivity">
+    tools:context="come.newbula.xing.ui.homepage.HomeFragmentActivity">
     <!--<FrameLayout-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->

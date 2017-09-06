@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">行拍</string>
-    <string name="challenge">挑战</string>
-    <string name="find_challenge">找挑战</string>
+    <string name="challenge">选一选</string>
+    <string name="find_challenge">比一比</string>
     <string name="video">视频</string>
-    <string name="pedestrian_list">行人榜</string>
-    <string name="mine">我</string>
+    <string name="pedestrian_list">看一看</string>
+    <string name="mine">虾比</string>
     <string name="home_back">请再按一次退出</string>
 </resources>

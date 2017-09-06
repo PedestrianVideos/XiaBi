@@ -3,6 +3,18 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="color_53574c">#53574c</color>
+    <color name="color_1B1F29">#1B1F29</color>
     <color name="white">#FFF</color>
+    <color name="line">#8C8C8F</color>
+    <color name="background">#191f29</color>
+    <color name="titile">#2b2e35</color>
+    <color name="color_C95530">#c95530</color>
+    <color name="color_CF5730">#cf5730</color>
+    <color name="color_2B2E35">#2b2e35</color>
+    <color name="color_FFE600">#ffe600</color>
+    <color name="color_8F6B27">#8f6b27</color>
+    <color name="color_3D3E43">#3d3e43</color>
+    <color name="color_7B7B7B">#7b7b7b</color>
+    <color name="color_30333B">#30333b</color>
+    <color name="color_AEACAD">#aeacad</color>
 </resources>
