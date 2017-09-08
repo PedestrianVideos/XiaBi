@@ -14,6 +14,7 @@ import come.newbula.xing.ui.view.imageloop.view.CBLoopViewPager;
  * Created by Sai on 15/7/29.
  */
 public class CBPageAdapter<T> extends PagerAdapter {
+
     protected List<T> mDatas;
     protected CBViewHolderCreator holderCreator;
 //    private View.OnClickListener onItemClickListener;

@@ -18,6 +18,7 @@ public class CBLoopViewPager extends ViewPager {
     private boolean canLoop = true;
 
     public void setAdapter(CBPageAdapter adapter, boolean canLoop) {
+
         mAdapter = (CBPageAdapter) adapter;
         mAdapter.setCanLoop(canLoop);
         mAdapter.setViewPager(this);

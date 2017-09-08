@@ -17,6 +17,7 @@ public class CBPageAdapter<T> extends RecyclingPagerAdapter {
     protected CBViewHolderCreator holderCreator;
 
     public CBPageAdapter(CBViewHolderCreator holderCreator, List<T> datas) {
+
         this.holderCreator = holderCreator;
         this.mDatas = datas;
     }

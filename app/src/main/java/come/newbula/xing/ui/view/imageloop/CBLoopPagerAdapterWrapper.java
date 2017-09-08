@@ -33,6 +33,7 @@ import android.view.ViewGroup;
  */
 public class CBLoopPagerAdapterWrapper extends PagerAdapter {
 
+
     private PagerAdapter mAdapter;
 
     private SparseArray<ToDestroy> mToDestroy = new SparseArray<ToDestroy>();

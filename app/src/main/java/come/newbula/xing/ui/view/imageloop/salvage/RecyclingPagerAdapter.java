@@ -10,6 +10,7 @@ import android.widget.AdapterView;
  * view recycling.
  */
 public abstract class RecyclingPagerAdapter extends PagerAdapter {
+
   static final int IGNORE_ITEM_VIEW_TYPE = AdapterView.ITEM_VIEW_TYPE_IGNORE;
 
   private final RecycleBin recycleBin;

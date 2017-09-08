@@ -16,6 +16,7 @@ public class CBPageChangeListener implements ViewPager.OnPageChangeListener {
     public CBPageChangeListener(ArrayList<ImageView> pointViews, int page_indicatorId[]){
         this.pointViews=pointViews;
         this.page_indicatorId = page_indicatorId;
+
     }
     @Override
     public void onPageScrollStateChanged(int state) {
