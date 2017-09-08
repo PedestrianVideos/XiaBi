@@ -3,6 +3,7 @@ package come.newbula.xing.ui.personinfo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 
 
 import come.newbula.xing.R;
+import come.newbula.xing.ui.login.LoginActivity;
 import come.newbula.xing.ui.personinfo.activity.AddFriendActivity;
 import come.newbula.xing.ui.personinfo.activity.NewsActivity;
 import come.newbula.xing.ui.personinfo.activity.PersonalActivity;
@@ -55,12 +57,16 @@ public class PersonInFoFragment extends Fragment implements View.OnClickListener
     //消息
     @ViewInject(R.id.img_xiaoxi)
     private ImageView img_xiaoxi;
+    //token
+    private String token;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         view = inflater.inflate(R.layout.fragment_personinfo, container, false);
         context = getActivity();
         ViewUtils.inject(this,view);
+        SharedPreferences sharedPre = context.getSharedPreferences("Access_token", context.MODE_PRIVATE);
+         token  = sharedPre.getString("access_token","");
         init();
         return view;
 
@@ -81,7 +87,8 @@ public class PersonInFoFragment extends Fragment implements View.OnClickListener
                 startActivity(new Intent(context, AddFriendActivity.class));
                 break;
             case R.id.tv_edit_zhuye: //编辑主页
-                startActivity(new Intent(context, PersonalActivity.class));
+//                startActivity(new Intent(context, PersonalActivity.class));
+                startActivity(new Intent(context, LoginActivity.class));
                 break;
             case R.id.rl_set_up://设置
                 startActivity(new Intent(context, SetUpActivity.class));
