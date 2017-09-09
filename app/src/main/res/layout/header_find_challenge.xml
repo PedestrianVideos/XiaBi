@@ -15,6 +15,7 @@
         </come.newbula.xing.utils.Views.LoopSwitch.AutoSwitchView>
 
         <RelativeLayout
+            android:id="@+id/rl_search"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:orientation="horizontal"
