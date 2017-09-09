@@ -7,8 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import come.newbula.xing.R;
+import come.newbula.xing.ui.pedestrianlist.adapter.PedestrianAdapter;
 
 /**
  * 文 件 名:  PedestrianListFragment.java
@@ -26,21 +28,28 @@ public class PedestrianListFragment extends Fragment
      */
     private Context context;
 
-
     /**
      * view
      */
     private View view;
 
+    /**
+     * 看一看布局
+     */
+    private ListView lvSee;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        view = inflater.inflate(R.layout.fragment_pedestrian_list, container, false);
+        if(null == view){
+            view = inflater.inflate(R.layout.fragment_pedestrian_list, container, false);
+            context = getActivity();
+        }
 
-        context = getActivity();
+        lvSee = (ListView) view.findViewById(R.id.lv_see);
+
+        lvSee.setAdapter(new PedestrianAdapter(context));
         return view;
-
     }
-
 
 }
