@@ -2,17 +2,21 @@ package come.newbula.xing.ui.findchallenge;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import come.newbula.xing.R;
+import come.newbula.xing.ui.findchallenge.activity.SearchActivity;
 import come.newbula.xing.ui.findchallenge.adapter.FindChallendAdapter;
 import come.newbula.xing.utils.Views.LoopSwitch.AutoSwitchAdapter;
 import come.newbula.xing.utils.Views.LoopSwitch.AutoSwitchView;
@@ -26,19 +30,22 @@ import come.newbula.xing.utils.Views.LoopSwitch.LoopModel;
  * 创 建 人:  ma
  * 创建时间:  2017年8月21日
  */
-public class FindChallengeFragment extends Fragment
-{
+public class FindChallengeFragment extends Fragment implements View.OnClickListener {
 
     /**
      * context
      */
     private Context context;
 
-
     /**
      * view
      */
     private View view;
+
+    /**
+     * 根布局
+     */
+    private ScrollView sv_find_challeng;
 
     /**
      * 轮播图控件
@@ -53,12 +60,18 @@ public class FindChallengeFragment extends Fragment
     /**
      * 轮播图数据集合
      */
-    private List<LoopModel> datas;
+    private List<LoopModel>  datas = new ArrayList<LoopModel>();
 
     /**
-     * 头布局
+     * 轮播图适配器
      */
-    private View header;
+    private AutoSwitchAdapter autoSwitchAdapter;
+
+    /**
+     * 搜索
+     */
+    private RelativeLayout rlSearch;
+
 
 
     @Override
@@ -69,10 +82,11 @@ public class FindChallengeFragment extends Fragment
         }
         context = getActivity();
         lvThan = (ListView) view.findViewById(R.id.lv_than);
-        header = View.inflate(context, R.layout.header_find_challenge,null);
-        mAutoSwitchView = (AutoSwitchView) header.findViewById(R.id.loopswitch);
-        initCarousel();
+        mAutoSwitchView = (AutoSwitchView) view.findViewById(R.id.loopswitch);
+        rlSearch = (RelativeLayout) view.findViewById(R.id.rl_search);
+        sv_find_challeng = (ScrollView) view.findViewById(R.id.sv_find_challeng);
         initview();
+        initCarousel();
         return view;
 
     }
@@ -82,33 +96,35 @@ public class FindChallengeFragment extends Fragment
      */
     private void initview() {
         lvThan.setAdapter(new FindChallendAdapter(context));
-        lvThan.addHeaderView(header);
-        AutoSwitchAdapter autoSwitchAdapter = new AutoSwitchAdapter(context, datas);
+        autoSwitchAdapter = new AutoSwitchAdapter(context, datas);
         mAutoSwitchView.setAdapter(autoSwitchAdapter);
+
+        rlSearch.setOnClickListener(this);
     }
 
     /**
      * 初始化轮播图数据
      */
     private void initCarousel() {
-        datas = new ArrayList<LoopModel>();
         LoopModel model = null;
-
         model = new LoopModel("第一张", R.mipmap.tp_1);
         datas.add(model);
         model = new LoopModel("第二张", R.mipmap.tp_2);
         datas.add(model);
         model = new LoopModel("第三张", R.mipmap.tp_3);
         datas.add(model);
+        autoSwitchAdapter.notifyDataSetChanged();
     }
 
-    /**
-     * 刷新页面数据
-     * 首页点击使用
-     * 返回类型:void
-     */
-    public void refreshData() {
-//        loadMoreLayout.setCurrentPage(1);
-//        loadData(1);
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.rl_search:
+                Intent intent = new Intent(context, SearchActivity.class);
+                startActivity(intent);
+            break;
+        }
+
     }
 }
