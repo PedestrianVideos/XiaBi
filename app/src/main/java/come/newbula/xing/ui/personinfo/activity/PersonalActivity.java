@@ -1,12 +1,15 @@
 package come.newbula.xing.ui.personinfo.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -70,6 +73,10 @@ public class PersonalActivity extends AppCompatActivity implements View.OnClickL
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     String url = "http://139.224.228.169:8089/xiabi/user/profile/";
+    //日历对象
+    private Dialog alert;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,8 +95,11 @@ public class PersonalActivity extends AppCompatActivity implements View.OnClickL
 
     private void init() {
         rl_back.setOnClickListener(this);
+        rl_sex.setOnClickListener(this);
+        rl_sex.setOnCreateContextMenuListener(new MyContextMenu());
+        rl_brithday.setOnClickListener(this);
 
-    }
+        }
 
     @Override
     public void onClick(View view) {
@@ -97,7 +107,60 @@ public class PersonalActivity extends AppCompatActivity implements View.OnClickL
             case R.id.rl_back: //返回
                 finish();
                 break;
+
+            case R.id.rl_sex:
+                rl_sex.showContextMenu();
+            break;
+
+            case R.id.rl_brithday:
+                EjectCalendarDialog();
+            break;
         }
+    }
+
+    //日历选择对话框
+    private void EjectCalendarDialog() {
+
+        if(null == alert){
+            alert = new Dialog(context);
+            View view = View.inflate(context,R.layout.dialog_eject,null);
+            CalendarView calendarView = (CalendarView) view.findViewById(R.id.cal);
+            calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                @Override
+                public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                    tv_brithday.setText(year+"/"+month+"/"+dayOfMonth);
+                    alert.dismiss();
+                }
+            });
+            alert.setContentView(view);
+        }
+        alert.show();
+    }
+
+
+    class MyContextMenu implements View.OnCreateContextMenuListener {
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.add(0, 0, 0, "男");
+            menu.add(0, 1, 0, "女");
+            menu.add(0, 2, 0, "取消");
+        }
+    }
+
+    //  原生Menu弹出框 点击回调
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case 0:
+                tv_sex.setText("男");
+            break;
+
+            case 1:
+                tv_sex.setText("女");
+                break;
+        }
+        return true;
     }
 
 
