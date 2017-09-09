@@ -1,184 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_home_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="come.newbula.xing.ui.homepage.HomeFragmentActivity">
-    <!--<FrameLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_alignParentLeft="true"-->
-        <!--android:layout_alignParentStart="true"-->
-        <!--android:layout_alignParentTop="true">-->
+    android:orientation="vertical"
+    android:background="#434a54"
+    >
 
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:orientation="vertical"-->
-        <!--android:visibility="visible">-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
 
-        <!--<FrameLayout-->
-            <!--android:id="@+id/content"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="1.0"/>-->
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:src="@mipmap/back"
+            />
 
-        <!--&lt;!&ndash;<View&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_height="1px"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:background="@color/workbench_line_color"/>&ndash;&gt;-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/mainlogo"
+            />
 
-        <!--<LinearLayout-->
-            <!--android:id="@+id/bootomTabLinear"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="49dp"-->
-            <!--android:background="@color/color_53574c"-->
-            <!--android:gravity="center"-->
-            <!--android:orientation="horizontal">-->
+    </RelativeLayout>
 
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/homeChallengeRelative"-->
-                <!--android:layout_width="0dip"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:gravity="center_vertical">-->
+    <ListView
+        android:id="@+id/lv_see"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        ></ListView>
 
-                <!--<ImageView-->
-                    <!--android:id="@+id/homeChallengeImg"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--/>-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/homeChallengeImgTxt"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_below="@id/homeChallengeImg"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:layout_marginTop="3dp"-->
-                    <!--android:text="@string/challenge"-->
-                    <!--android:textColor="@color/white"-->
-                    <!--android:textSize="12sp"/>-->
-
-
-            <!--</RelativeLayout>-->
-
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/homeFindchallengeRelative"-->
-                <!--android:layout_width="0dip"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:gravity="center_vertical">-->
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/homeFindchallengeImg"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--/>-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/homeFindchallengeTxt"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_below="@id/homeFindchallengeImg"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:layout_marginTop="3dp"-->
-                    <!--android:text="@string/find_challenge"-->
-                    <!--android:textColor="@color/white"-->
-                    <!--android:textSize="12sp"/>-->
-            <!--</RelativeLayout>-->
-
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/homeViodeRelative"-->
-                <!--android:layout_width="0dip"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:gravity="center_vertical">-->
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/homeViodeImg"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:src="@mipmap/ic_launcher"-->
-                    <!--android:layout_centerInParent="true"/>-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/homeViodeTxt"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_below="@id/homeViodeImg"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:layout_marginTop="3dp"-->
-                    <!--android:text="@string/video"-->
-                    <!--android:textColor="@color/white"-->
-                    <!--android:textSize="12sp"-->
-                    <!--android:visibility="gone"/>-->
-            <!--</RelativeLayout>-->
-
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/homePedestrianRelative"-->
-                <!--android:layout_width="0dip"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:gravity="center_vertical">-->
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/homePedestrianImg"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--/>-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/homePedestrianTxt"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:layout_below="@+id/homePedestrianImg"-->
-                    <!--android:layout_marginTop="3dp"-->
-                    <!--android:text="@string/pedestrian_list"-->
-                    <!--android:textColor="@color/white"-->
-                    <!--android:textSize="12sp"/>-->
-
-
-            <!--</RelativeLayout>-->
-            <!--<RelativeLayout-->
-                <!--android:id="@+id/homeMineRelative"-->
-                <!--android:layout_width="0dip"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:gravity="center_vertical">-->
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/homemineImg"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--/>-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/homemineTxt"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_below="@id/homemineImg"-->
-                    <!--android:layout_centerHorizontal="true"-->
-                    <!--android:layout_marginTop="3dp"-->
-                    <!--android:text="@string/mine"-->
-                    <!--android:textColor="@color/white"-->
-                    <!--android:textSize="12sp"/>-->
-
-            <!--</RelativeLayout>-->
-        <!--</LinearLayout>-->
-    <!--</LinearLayout>-->
-    <!--</FrameLayout>-->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3"
-        android:textColor="@color/colorAccent"
-        android:layout_centerInParent="true"/>
-</RelativeLayout>
+</LinearLayout>
