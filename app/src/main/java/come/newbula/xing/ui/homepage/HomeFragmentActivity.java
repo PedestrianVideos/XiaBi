@@ -1,16 +1,12 @@
 package come.newbula.xing.ui.homepage;
 
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -22,14 +18,6 @@ import android.widget.Toast;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateEncodingException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
 
 import come.newbula.xing.R;
 import come.newbula.xing.ui.challenge.ChallengeFragment;
@@ -253,8 +241,11 @@ public class HomeFragmentActivity extends AppCompatActivity implements View.OnCl
                 curFragmentTag=getString(R.string.find_challenge);
                 break;
             case R.id.homeViodeRelative: //视频拍摄
-                setTabSelection(getString(R.string.video));
-                curFragmentTag=getString(R.string.video);
+
+                Toast.makeText(context,"此功能暂未开发",Toast.LENGTH_SHORT).show();
+
+//                setTabSelection(getString(R.string.video));
+//                curFragmentTag=getString(R.string.video);
                 break;
             case R.id.homePedestrianRelative: // 行人榜
                 setTabSelection(getString(R.string.pedestrian_list));
@@ -486,7 +477,7 @@ public class HomeFragmentActivity extends AppCompatActivity implements View.OnCl
         {
             fragmentTransaction.commit();
         }
-        onResume();//
+        onResume();
     }
 
     /**
