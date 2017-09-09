@@ -7,8 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import come.newbula.xing.R;
+import come.newbula.xing.ui.findchallenge.adapter.FindChallendAdapter;
 
 /**
  * 文 件 名:  FindChallengeFragment.java
@@ -32,12 +34,18 @@ public class FindChallengeFragment extends Fragment
      */
     private View view;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        view = inflater.inflate(R.layout.fragment_find_challenge, container, false);
-
+        if(null == view){
+            view = inflater.inflate(R.layout.fragment_find_challenge, container, false);
+        }
         context = getActivity();
+
+        ListView lvThan = (ListView) view.findViewById(R.id.lv_than);
+        lvThan.setAdapter(new FindChallendAdapter(context));
         return view;
 
     }
