@@ -145,6 +145,10 @@ public class LoginPasswordActivity extends BaseActivity implements View.OnClickL
                         SharedPreferences.Editor editPhone = sharePhone.edit();
                         editPhone.putString("phone",phone);
                         editPhone.commit();
+                        SharedPreferences shareuid = context.getSharedPreferences("Uid", context.MODE_PRIVATE);
+                        SharedPreferences.Editor editUid = shareuid.edit();
+                        editUid.putString("uid",loginBean.getData().getUid());
+                        editUid.commit();
                         startActivity(new Intent(context, HomeFragmentActivity.class));
                         finish();
                     }else {

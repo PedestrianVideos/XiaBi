@@ -90,6 +90,88 @@ public class RegisterResBean {
     }
 
     public static class DataBean {
+
+        private String uid;
+        private boolean hasRegistered ;
+        private String sandboxTag ;
+        private  int registerType;
+        private String passwd;
+        private String nickName;
+        private String signature;
+        private  String phone;
+        private  String locked;
+
+        public String getUid() {
+            return uid;
+        }
+
+        public void setUid(String uid) {
+            this.uid = uid;
+        }
+
+        public boolean isHasRegistered() {
+            return hasRegistered;
+        }
+
+        public void setHasRegistered(boolean hasRegistered) {
+            this.hasRegistered = hasRegistered;
+        }
+
+        public String getSandboxTag() {
+            return sandboxTag;
+        }
+
+        public void setSandboxTag(String sandboxTag) {
+            this.sandboxTag = sandboxTag;
+        }
+
+        public int getRegisterType() {
+            return registerType;
+        }
+
+        public void setRegisterType(int registerType) {
+            this.registerType = registerType;
+        }
+
+        public String getPasswd() {
+            return passwd;
+        }
+
+        public void setPasswd(String passwd) {
+            this.passwd = passwd;
+        }
+
+        public String getNickName() {
+            return nickName;
+        }
+
+        public void setNickName(String nickName) {
+            this.nickName = nickName;
+        }
+
+        public String getSignature() {
+            return signature;
+        }
+
+        public void setSignature(String signature) {
+            this.signature = signature;
+        }
+
+        public String getPhone() {
+            return phone;
+        }
+
+        public void setPhone(String phone) {
+            this.phone = phone;
+        }
+
+        public String getLocked() {
+            return locked;
+        }
+
+        public void setLocked(String locked) {
+            this.locked = locked;
+        }
     }
 
     public static class AaaBean {

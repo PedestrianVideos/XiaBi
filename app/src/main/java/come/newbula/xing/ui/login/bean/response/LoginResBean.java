@@ -98,37 +98,24 @@ public class LoginResBean {
     }
 
     public static class DataBean {
-        /**
-         * uid : null
-         * hasRegistered : false
-         * sandboxTag : null
-         * registerType : null
-         * nickName : null
-         * signature : null
-         * phone : null
-         * locked : null
-         * sms_provider : mobsms
-         * nextUrl : /register/phone
-         * nextUrl_method : post
-         */
 
-        private Object uid;
+        private String uid;
         private boolean hasRegistered;
-        private Object sandboxTag;
-        private Object registerType;
-        private Object nickName;
-        private Object signature;
-        private Object phone;
-        private Object locked;
+        private String sandboxTag;
+        private String registerType;
+        private String nickName;
+        private String signature;
+        private String phone;
+        private boolean locked;
         private String sms_provider;
         private String nextUrl;
         private String nextUrl_method;
 
-        public Object getUid() {
+        public String getUid() {
             return uid;
         }
 
-        public void setUid(Object uid) {
+        public void setUid(String uid) {
             this.uid = uid;
         }
 
@@ -140,51 +127,51 @@ public class LoginResBean {
             this.hasRegistered = hasRegistered;
         }
 
-        public Object getSandboxTag() {
+        public String getSandboxTag() {
             return sandboxTag;
         }
 
-        public void setSandboxTag(Object sandboxTag) {
+        public void setSandboxTag(String sandboxTag) {
             this.sandboxTag = sandboxTag;
         }
 
-        public Object getRegisterType() {
+        public String getRegisterType() {
             return registerType;
         }
 
-        public void setRegisterType(Object registerType) {
+        public void setRegisterType(String registerType) {
             this.registerType = registerType;
         }
 
-        public Object getNickName() {
+        public String getNickName() {
             return nickName;
         }
 
-        public void setNickName(Object nickName) {
+        public void setNickName(String nickName) {
             this.nickName = nickName;
         }
 
-        public Object getSignature() {
+        public String getSignature() {
             return signature;
         }
 
-        public void setSignature(Object signature) {
+        public void setSignature(String signature) {
             this.signature = signature;
         }
 
-        public Object getPhone() {
+        public String getPhone() {
             return phone;
         }
 
-        public void setPhone(Object phone) {
+        public void setPhone(String phone) {
             this.phone = phone;
         }
 
-        public Object getLocked() {
+        public boolean isLocked() {
             return locked;
         }
 
-        public void setLocked(Object locked) {
+        public void setLocked(boolean locked) {
             this.locked = locked;
         }
 
