@@ -128,7 +128,7 @@ public class PersonalActivity extends AppCompatActivity implements View.OnClickL
             calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
                 @Override
                 public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                    tv_brithday.setText(year+"/"+month+"/"+dayOfMonth);
+                    tv_brithday.setText(year+"/"+(month+1)+"/"+dayOfMonth);
                     alert.dismiss();
                 }
             });
