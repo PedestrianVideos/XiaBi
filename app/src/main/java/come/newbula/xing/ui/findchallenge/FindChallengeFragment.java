@@ -9,8 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import come.newbula.xing.R;
 import come.newbula.xing.ui.findchallenge.adapter.FindChallendAdapter;
+import come.newbula.xing.utils.Views.LoopSwitch.AutoSwitchAdapter;
+import come.newbula.xing.utils.Views.LoopSwitch.AutoSwitchView;
+import come.newbula.xing.utils.Views.LoopSwitch.LoopModel;
 
 /**
  * 文 件 名:  FindChallengeFragment.java
@@ -34,6 +40,25 @@ public class FindChallengeFragment extends Fragment
      */
     private View view;
 
+    /**
+     * 轮播图控件
+     */
+    private AutoSwitchView mAutoSwitchView;
+
+    /**
+     * 比一比List
+     */
+    private ListView lvThan;
+
+    /**
+     * 轮播图数据集合
+     */
+    private List<LoopModel> datas;
+
+    /**
+     * 头布局
+     */
+    private View header;
 
 
     @Override
@@ -43,13 +68,38 @@ public class FindChallengeFragment extends Fragment
             view = inflater.inflate(R.layout.fragment_find_challenge, container, false);
         }
         context = getActivity();
-
-        ListView lvThan = (ListView) view.findViewById(R.id.lv_than);
-        View header = View.inflate(context,R.layout.header_find_challenge,null);
-        lvThan.setAdapter(new FindChallendAdapter(context));
-        lvThan.addHeaderView(header);
+        lvThan = (ListView) view.findViewById(R.id.lv_than);
+        header = View.inflate(context, R.layout.header_find_challenge,null);
+        mAutoSwitchView = (AutoSwitchView) header.findViewById(R.id.loopswitch);
+        initCarousel();
+        initview();
         return view;
 
+    }
+
+    /**
+     * 初始化控件
+     */
+    private void initview() {
+        lvThan.setAdapter(new FindChallendAdapter(context));
+        lvThan.addHeaderView(header);
+        AutoSwitchAdapter autoSwitchAdapter = new AutoSwitchAdapter(context, datas);
+        mAutoSwitchView.setAdapter(autoSwitchAdapter);
+    }
+
+    /**
+     * 初始化轮播图数据
+     */
+    private void initCarousel() {
+        datas = new ArrayList<LoopModel>();
+        LoopModel model = null;
+
+        model = new LoopModel("第一张", R.mipmap.tp_1);
+        datas.add(model);
+        model = new LoopModel("第二张", R.mipmap.tp_2);
+        datas.add(model);
+        model = new LoopModel("第三张", R.mipmap.tp_3);
+        datas.add(model);
     }
 
     /**
