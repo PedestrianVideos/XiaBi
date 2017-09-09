@@ -1,6 +1,8 @@
 package come.newbula.xing.ui.homepage;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,6 +24,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import come.newbula.xing.R;
 import come.newbula.xing.ui.challenge.ChallengeFragment;
 import come.newbula.xing.ui.findchallenge.FindChallengeFragment;
+import come.newbula.xing.ui.login.LoginActivity;
 import come.newbula.xing.ui.pedestrianlist.PedestrianListFragment;
 import come.newbula.xing.ui.personinfo.PersonInFoFragment;
 import come.newbula.xing.ui.video.VideoFragment;
@@ -138,7 +141,9 @@ public class HomeFragmentActivity extends AppCompatActivity implements View.OnCl
     @ViewInject(R.id.homemineImg)
     private ImageView homemineImg;
 
-    private Context context;
+    private Context mcontext;
+    //是否登录
+    private Boolean isLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,8 +151,10 @@ public class HomeFragmentActivity extends AppCompatActivity implements View.OnCl
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_home_page);
-        context=getApplication();
+        mcontext=HomeFragmentActivity.this;
         ViewUtils.inject(this);
+        SharedPreferences sharedPre = mcontext.getSharedPreferences("IsLogin", mcontext.MODE_PRIVATE);
+        isLogin = sharedPre.getBoolean("isLogin", false);
         init();
 
     }
@@ -242,7 +249,7 @@ public class HomeFragmentActivity extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.homeViodeRelative: //视频拍摄
 
-                Toast.makeText(context,"此功能暂未开发",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mcontext,"此功能暂未开发",Toast.LENGTH_SHORT).show();
 
 //                setTabSelection(getString(R.string.video));
 //                curFragmentTag=getString(R.string.video);
@@ -252,8 +259,13 @@ public class HomeFragmentActivity extends AppCompatActivity implements View.OnCl
                 curFragmentTag=getString(R.string.pedestrian_list);
                 break;
             case R.id.homeMineRelative: // 我
-                setTabSelection(getString(R.string.mine));
-                curFragmentTag=getString(R.string.mine);
+                if (isLogin){
+                    setTabSelection(getString(R.string.mine));
+                    curFragmentTag=getString(R.string.mine);
+                }else {
+                    startActivity(new Intent(mcontext, LoginActivity.class));
+                }
+
                 break;
 
 

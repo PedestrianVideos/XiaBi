@@ -31,6 +31,7 @@ import java.util.concurrent.TimeUnit;
 
 import come.newbula.xing.BaseActivity;
 import come.newbula.xing.R;
+import come.newbula.xing.ui.homepage.HomeFragmentActivity;
 import come.newbula.xing.ui.login.activity.LoginPasswordActivity;
 import come.newbula.xing.ui.login.activity.RegisterActivity;
 import come.newbula.xing.ui.login.bean.request.LoginReqBean;
@@ -86,6 +87,8 @@ public class LoginActivity extends BaseActivity implements TextWatcher,View.OnCl
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_back: //返回
+                Intent intent=new Intent(context, HomeFragmentActivity.class);
+                startActivity(intent);
                 finish();
                 break;
             case R.id.img_jinru: //点击登录

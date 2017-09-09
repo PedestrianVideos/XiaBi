@@ -87,8 +87,7 @@ public class PersonInFoFragment extends Fragment implements View.OnClickListener
                 startActivity(new Intent(context, AddFriendActivity.class));
                 break;
             case R.id.tv_edit_zhuye: //编辑主页
-//                startActivity(new Intent(context, PersonalActivity.class));
-                startActivity(new Intent(context, LoginActivity.class));
+                startActivity(new Intent(context, PersonalActivity.class));
                 break;
             case R.id.rl_set_up://设置
                 startActivity(new Intent(context, SetUpActivity.class));

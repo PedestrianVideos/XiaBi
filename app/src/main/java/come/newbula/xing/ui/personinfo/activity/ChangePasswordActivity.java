@@ -1,16 +1,42 @@
 package come.newbula.xing.ui.personinfo.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import come.newbula.xing.BaseActivity;
 import come.newbula.xing.R;
+import come.newbula.xing.ui.login.bean.response.RegisterResBean;
+import come.newbula.xing.ui.personinfo.bean.request.ChangePasswordReqBean;
+import come.newbula.xing.ui.personinfo.bean.response.ChangePasswordResBean;
+import come.newbula.xing.utils.MD5;
+
 /**
  * 文 件 名:  ChangePasswordActivity.java
  * 版    权:  xingren
@@ -19,31 +45,120 @@ import come.newbula.xing.R;
  * 创 建 人:  ma
  * 创建时间:  2017年8月24日
  */
-public class ChangePasswordActivity extends AppCompatActivity  implements View.OnClickListener{
+public class ChangePasswordActivity extends BaseActivity implements View.OnClickListener{
 
     @ViewInject(R.id.rl_back)
     private RelativeLayout rl_back;
+    private Context context;
+    //号码
+    private String phone;
+    //当前密码
+    @ViewInject(R.id.ed_old_password)
+    private EditText ed_old_password;
+    //新密码
+    @ViewInject(R.id.ed_new_password)
+    private EditText ed_new_password;
+    //再次输入新密码
+    @ViewInject(R.id.ed_agin_password)
+    private EditText ed_agin_password;
+    //完成
+    @ViewInject(R.id.tv_complate)
+    private TextView tv_complate;
+
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+    String url = "http://139.224.228.169:8089/xiabi/user/passwd/modify";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_change_password);
         ViewUtils.inject(this);
+        context=ChangePasswordActivity.this;
+        SharedPreferences sharedPre = context.getSharedPreferences("Phone", context.MODE_PRIVATE);
+        phone = sharedPre.getString("phone", "");
         init();
     }
 
     private void init() {
         rl_back.setOnClickListener(this);
+        tv_complate.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.rl_back:
+            case R.id.rl_back: //返回
                 finish();
+                break;
+            case R.id.tv_complate: //完成
+                if (ed_new_password.getText().toString().equals(ed_agin_password.getText().toString())){
+                    loginPost();
+                }else {
+                    Toast.makeText(context,"新密码输入不一致，请重新输入", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
         }
+    }
+
+
+
+    //请求更改密码
+    private   void loginPost() {
+        OkHttpClient client = new OkHttpClient();
+        client.setConnectTimeout(10, TimeUnit.SECONDS);
+        client.setReadTimeout(10, TimeUnit.SECONDS);
+        client.setWriteTimeout(30,TimeUnit.SECONDS);
+        ChangePasswordReqBean query = new ChangePasswordReqBean();
+        query.setPhone(phone);
+        query.setOldPasswd(new MD5().md5(ed_old_password.getText().toString().trim()));
+        query.setNewPasswd(new MD5().md5(ed_new_password.getText().toString().trim()));
+        String s = new Gson().toJson(query);
+        RequestBody body = RequestBody.create(JSON, s);
+        final Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                Toast.makeText(context,"网络异常，请稍候重试", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                if (response.isSuccessful()){
+                    Gson gson = new Gson();
+//                    Log.d("---------", response.body().string());
+//                    String s1=response.body().string();
+//                    try {
+//                        JSONObject jsonObject=new JSONObject(s1);
+//                        JSONObject jsonObject1=jsonObject.getJSONObject("meta");
+//                        String  code=jsonObject1.optString("code");
+//                        Log.e("---------","=="+code);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+
+
+//                    ChangePasswordResBean changePasswordResBean = gson.fromJson(response.body().string(), ChangePasswordResBean.class);
+//                    if (changePasswordResBean.getMeta().getCode().equals("0000")){
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(context,"密码更改成功！", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        finish();
+//                    }else {
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                Toast.makeText(context,"原密码输入有误", Toast.LENGTH_SHORT).show();                            }
+//                        });
+//                    }
+                }
+            }
+        });
     }
 }

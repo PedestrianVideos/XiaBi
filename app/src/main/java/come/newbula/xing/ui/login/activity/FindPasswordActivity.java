@@ -196,7 +196,12 @@ public class FindPasswordActivity extends BaseActivity {
 //                    Log.d("------------", response.body().string());
                     FindPasswordResBean findPasswordResBean = gson.fromJson(response.body().string(), FindPasswordResBean.class);
                     if (findPasswordResBean.getMeta().getCode().equals("0000")){
-                        Log.e("------------","新密码设置成功！");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(context,"新密码设置成功！",Toast.LENGTH_SHORT).show();
+                            }
+                        });
                         finish();
                     }
 

@@ -123,15 +123,37 @@ public class LoginPasswordActivity extends BaseActivity implements View.OnClickL
             public void onResponse(Response response) throws IOException {
                 if (response.isSuccessful()){
                     Gson gson = new Gson();
+
                     LoginResBean loginBean = gson.fromJson(response.body().string(), LoginResBean.class);
                     if (loginBean.getMeta().getCode().equals("0000")){
-                        Log.e("------------","登录成功！");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(context,"登录成功！",Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
                         SharedPreferences sharedialog = context.getSharedPreferences("Access_token", context.MODE_PRIVATE);
                         SharedPreferences.Editor Convened = sharedialog.edit();
                         Convened.putString("access_token", loginBean.getAaa().getAccess_token().toString());
                         Convened.commit();
+                        SharedPreferences share = context.getSharedPreferences("IsLogin", context.MODE_PRIVATE);
+                        SharedPreferences.Editor Conven = share.edit();
+                        Conven.putBoolean("isLogin",true);
+                        Conven.commit();
+                        SharedPreferences sharePhone = context.getSharedPreferences("Phone", context.MODE_PRIVATE);
+                        SharedPreferences.Editor editPhone = sharePhone.edit();
+                        editPhone.putString("phone",phone);
+                        editPhone.commit();
                         startActivity(new Intent(context, HomeFragmentActivity.class));
                         finish();
+                    }else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(context,"登录失败！",Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 }
             }
