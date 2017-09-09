@@ -45,7 +45,9 @@ public class FindChallengeFragment extends Fragment
         context = getActivity();
 
         ListView lvThan = (ListView) view.findViewById(R.id.lv_than);
+        View header = View.inflate(context,R.layout.header_find_challenge,null);
         lvThan.setAdapter(new FindChallendAdapter(context));
+        lvThan.addHeaderView(header);
         return view;
 
     }
