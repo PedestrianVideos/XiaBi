@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,27 +17,21 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import come.newbula.xing.R;
-import come.newbula.xing.ui.login.activity.LoginPasswordActivity;
-import come.newbula.xing.ui.login.activity.RegisterActivity;
-import come.newbula.xing.ui.login.bean.response.LoginResBean;
-import come.newbula.xing.ui.login.bean.response.RegisterResBean;
 import come.newbula.xing.ui.personinfo.activity.AddFriendActivity;
 import come.newbula.xing.ui.personinfo.activity.NewsActivity;
 import come.newbula.xing.ui.personinfo.activity.PersonalActivity;
 import come.newbula.xing.ui.personinfo.activity.SetUpActivity;
 import come.newbula.xing.ui.personinfo.bean.response.UserInfoResBean;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * 文 件 名:  PersonInFoFragment.java
@@ -140,21 +133,18 @@ public class PersonInFoFragment extends Fragment implements View.OnClickListener
     private   void userInfoReq() {
         url=url+uid+"?access_token="+token;
         OkHttpClient client = new OkHttpClient();
-        client.setConnectTimeout(10, TimeUnit.SECONDS);
-        client.setReadTimeout(10, TimeUnit.SECONDS);
-        client.setWriteTimeout(30,TimeUnit.SECONDS);
         final Request request = new Request.Builder()
                 .url(url)
                 .get()
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Request request, IOException e) {
+            public void onFailure(Call call, IOException e) {
                 Toast.makeText(context,"网络异常，请稍候重试",Toast.LENGTH_SHORT).show();
             }
-            @Override
-            public void onResponse(Response response) throws IOException {
 
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()){
                     Gson gson = new Gson();
                     final UserInfoResBean userInfoResBean = gson.fromJson(response.body().string(), UserInfoResBean.class);

@@ -3,32 +3,17 @@ package come.newbula.xing.ui.personinfo.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import com.squareup.okhttp.Callback;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import come.newbula.xing.BaseActivity;
 import come.newbula.xing.R;
 import come.newbula.xing.ui.login.LoginActivity;
-import come.newbula.xing.ui.personinfo.bean.request.ChangePasswordReqBean;
-import come.newbula.xing.utils.MD5;
 
 /**
  * 文 件 名:  SetUpActivity.java

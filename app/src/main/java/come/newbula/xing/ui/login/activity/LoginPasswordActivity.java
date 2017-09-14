@@ -4,10 +4,7 @@ package come.newbula.xing.ui.login.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,17 +15,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.concurrent.TimeUnit;
 
 import come.newbula.xing.BaseActivity;
 import come.newbula.xing.R;
@@ -36,6 +24,13 @@ import come.newbula.xing.ui.homepage.HomeFragmentActivity;
 import come.newbula.xing.ui.login.bean.request.LoginReqBean;
 import come.newbula.xing.ui.login.bean.response.LoginResBean;
 import come.newbula.xing.utils.MD5;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 
 public class LoginPasswordActivity extends BaseActivity implements View.OnClickListener{
@@ -100,9 +95,6 @@ public class LoginPasswordActivity extends BaseActivity implements View.OnClickL
     }
     private   void loginPost() {
         OkHttpClient client = new OkHttpClient();
-        client.setConnectTimeout(10, TimeUnit.SECONDS);
-        client.setReadTimeout(10, TimeUnit.SECONDS);
-        client.setWriteTimeout(30,TimeUnit.SECONDS);
         LoginReqBean query = new LoginReqBean();
         query.setAccess_token("");
         query.setPhone(tv_phone.getText().toString().trim());
@@ -115,12 +107,12 @@ public class LoginPasswordActivity extends BaseActivity implements View.OnClickL
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Request request, IOException e) {
+            public void onFailure(Call call, IOException e) {
                 Toast.makeText(context,"网络异常，请稍候重试",Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onResponse(Response response) throws IOException {
+            public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()){
                     Gson gson = new Gson();
 

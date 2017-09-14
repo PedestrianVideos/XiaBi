@@ -2,40 +2,30 @@ package come.newbula.xing.ui.personinfo.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import come.newbula.xing.BaseActivity;
 import come.newbula.xing.R;
-import come.newbula.xing.ui.login.bean.response.RegisterResBean;
 import come.newbula.xing.ui.personinfo.bean.request.ChangePasswordReqBean;
-import come.newbula.xing.ui.personinfo.bean.response.ChangePasswordResBean;
 import come.newbula.xing.utils.MD5;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * 文 件 名:  ChangePasswordActivity.java
@@ -106,9 +96,6 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
     //请求更改密码
     private   void loginPost() {
         OkHttpClient client = new OkHttpClient();
-        client.setConnectTimeout(10, TimeUnit.SECONDS);
-        client.setReadTimeout(10, TimeUnit.SECONDS);
-        client.setWriteTimeout(30,TimeUnit.SECONDS);
         ChangePasswordReqBean query = new ChangePasswordReqBean();
         query.setPhone(phone);
         query.setOldPasswd(new MD5().md5(ed_old_password.getText().toString().trim()));
@@ -121,12 +108,12 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Request request, IOException e) {
+            public void onFailure(Call call, IOException e) {
                 Toast.makeText(context,"网络异常，请稍候重试", Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onResponse(Response response) throws IOException {
+            public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()){
                     Gson gson = new Gson();
 //                    Log.d("---------", response.body().string());
@@ -143,13 +130,13 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
 
 //                    ChangePasswordResBean changePasswordResBean = gson.fromJson(response.body().string(), ChangePasswordResBean.class);
 //                    if (changePasswordResBean.getMeta().getCode().equals("0000")){
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(context,"密码更改成功！", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        finish();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context,"密码更改成功！", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    finish();
 //                    }else {
 //                        runOnUiThread(new Runnable() {
 //                            @Override

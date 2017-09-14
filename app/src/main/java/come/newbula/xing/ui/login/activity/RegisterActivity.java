@@ -15,26 +15,24 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 import come.newbula.xing.BaseActivity;
 import come.newbula.xing.R;
 import come.newbula.xing.ui.homepage.HomeFragmentActivity;
-import come.newbula.xing.ui.login.bean.request.LoginReqBean;
 import come.newbula.xing.ui.login.bean.request.RegisterReqBean;
-import come.newbula.xing.ui.login.bean.response.LoginResBean;
 import come.newbula.xing.ui.login.bean.response.RegisterResBean;
 import come.newbula.xing.utils.MD5;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class RegisterActivity extends BaseActivity {
     private int recLen = 60;
@@ -131,21 +129,19 @@ public class RegisterActivity extends BaseActivity {
     private   void verifyReq() {
         url=url+"?phone="+phone;
         OkHttpClient client = new OkHttpClient();
-        client.setConnectTimeout(10, TimeUnit.SECONDS);
-        client.setReadTimeout(10, TimeUnit.SECONDS);
-        client.setWriteTimeout(30,TimeUnit.SECONDS);
         final Request request = new Request.Builder()
                 .url(url)
                 .get()
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Request request, IOException e) {
+            public void onFailure(Call call, IOException e) {
                 Toast.makeText(context,"网络异常，请稍候重试",Toast.LENGTH_SHORT).show();
             }
+
             @Override
-            public void onResponse(Response response) throws IOException {
-               Log.e("-----","短信验证码发送成功");
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.e("-----","短信验证码发送成功");
             }
         });
     }
@@ -155,21 +151,18 @@ public class RegisterActivity extends BaseActivity {
     private   void validateReq() {
         validateUrl=validateUrl+"?phone="+phone+"&verifyNumber="+ed_verification.getText().toString().trim();
         OkHttpClient client = new OkHttpClient();
-        client.setConnectTimeout(10, TimeUnit.SECONDS);
-        client.setReadTimeout(10, TimeUnit.SECONDS);
-        client.setWriteTimeout(30,TimeUnit.SECONDS);
         final Request request = new Request.Builder()
                 .url(validateUrl)
                 .get()
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Request request, IOException e) {
+            public void onFailure(Call call, IOException e) {
                 Toast.makeText(context,"网络异常，请稍候重试",Toast.LENGTH_SHORT).show();
             }
-            @Override
-            public void onResponse(Response response) throws IOException {
 
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()){
                     Log.e("-----","短信验证码校验成功");
                     registerReq();
@@ -181,9 +174,6 @@ public class RegisterActivity extends BaseActivity {
     //注册请求
     private   void registerReq() {
         OkHttpClient client = new OkHttpClient();
-        client.setConnectTimeout(10, TimeUnit.SECONDS);
-        client.setReadTimeout(10, TimeUnit.SECONDS);
-        client.setWriteTimeout(30,TimeUnit.SECONDS);
         RegisterReqBean query = new RegisterReqBean();
         query.setPhone(phone.trim());
         query.setPasswd(new MD5().md5(ed_new_password.getText().toString().trim()));
@@ -195,11 +185,12 @@ public class RegisterActivity extends BaseActivity {
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Request request, IOException e) {
+            public void onFailure(Call call, IOException e) {
                 Toast.makeText(context,"网络异常，请稍候重试",Toast.LENGTH_SHORT).show();
             }
+
             @Override
-            public void onResponse(Response response) throws IOException {
+            public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()){
                     Gson gson = new Gson();
                     RegisterResBean registerResBean = gson.fromJson(response.body().string(), RegisterResBean.class);

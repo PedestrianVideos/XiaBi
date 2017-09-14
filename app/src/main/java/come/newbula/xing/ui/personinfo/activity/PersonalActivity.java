@@ -18,17 +18,17 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import come.newbula.xing.R;
 import come.newbula.xing.ui.personinfo.bean.response.UserInfoResBean;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * 文 件 名:  MailListActivity.java
@@ -170,21 +170,18 @@ public class PersonalActivity extends AppCompatActivity implements View.OnClickL
     private   void userInfoReq() {
         url=url+uid+"?access_token="+token;
         OkHttpClient client = new OkHttpClient();
-        client.setConnectTimeout(10, TimeUnit.SECONDS);
-        client.setReadTimeout(10, TimeUnit.SECONDS);
-        client.setWriteTimeout(30,TimeUnit.SECONDS);
         final Request request = new Request.Builder()
                 .url(url)
                 .get()
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Request request, IOException e) {
+            public void onFailure(Call call, IOException e) {
                 Toast.makeText(context,"网络异常，请稍候重试",Toast.LENGTH_SHORT).show();
             }
-            @Override
-            public void onResponse(Response response) throws IOException {
 
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()){
                     Gson gson = new Gson();
                     final UserInfoResBean userInfoResBean = gson.fromJson(response.body().string(), UserInfoResBean.class);
