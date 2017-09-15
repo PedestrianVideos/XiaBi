@@ -64,7 +64,7 @@ public class ChangePasswordActivity extends BaseActivity implements View.OnClick
         setContentView(R.layout.activity_change_password);
         ViewUtils.inject(this);
         context=ChangePasswordActivity.this;
-        SharedPreferences sharedPre = context.getSharedPreferences("Phone", context.MODE_PRIVATE);
+        SharedPreferences sharedPre = context.getSharedPreferences("UserInfo", context.MODE_PRIVATE);
         phone = sharedPre.getString("phone", "");
         init();
     }

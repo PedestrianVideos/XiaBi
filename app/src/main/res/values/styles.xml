@@ -36,8 +36,8 @@
 
     <style name="AliyunVideoUIStytle"  parent="Theme.AppCompat.NoActionBar">
         <item name="qusnap_background_color">@color/color_bg</item> //背景主题色
-        <item name="qusnap_tint_color">@color/aliyun_transparent</item> //录制进度条颜色
-        <item name="qusnap_timeline_backgound_color">@color/aliyun_transparent</item> //录制进度条背景色
+        <item name="qusnap_tint_color">@color/color_AEACAD</item> //录制进度条颜色
+        <item name="qusnap_timeline_backgound_color">@color/white</item> //录制进度条背景色
         <item name="qusnap_timeline_del_backgound_color">@color/aliyun_transparent</item> //录制删除进度颜色
         <item name="qusnap_back_icon">@mipmap/icon_back</item> // 返回按钮图标
         <item name="qusnap_switch_light_icon">@drawable/snap_switch_light_selector</item> //闪光灯选择器

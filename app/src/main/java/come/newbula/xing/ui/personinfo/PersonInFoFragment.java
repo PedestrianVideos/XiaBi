@@ -89,10 +89,9 @@ public class PersonInFoFragment extends Fragment implements View.OnClickListener
         view = inflater.inflate(R.layout.fragment_personinfo, container, false);
         context = getActivity();
         ViewUtils.inject(this,view);
-        SharedPreferences sharedPre = context.getSharedPreferences("Access_token", context.MODE_PRIVATE);
+        SharedPreferences sharedPre = context.getSharedPreferences("UserInfo", context.MODE_PRIVATE);
          token  = sharedPre.getString("access_token","");
-        SharedPreferences sharedPreUid = context.getSharedPreferences("Uid", context.MODE_PRIVATE);
-        uid  = sharedPreUid.getString("uid","");
+        uid  = sharedPre.getString("uid","");
         init();
         userInfoReq();
         return view;

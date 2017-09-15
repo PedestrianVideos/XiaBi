@@ -192,8 +192,6 @@ public class HomeFragmentActivity extends AppCompatActivity implements View.OnCl
                 },
                 0);
 
-
-
         initQuPai();
 
         init();

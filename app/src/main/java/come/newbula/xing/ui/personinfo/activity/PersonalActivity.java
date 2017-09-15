@@ -85,10 +85,10 @@ public class PersonalActivity extends AppCompatActivity implements View.OnClickL
         getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         context=PersonalActivity.this;
         ViewUtils.inject(this);
-        SharedPreferences sharedPre = context.getSharedPreferences("Access_token", context.MODE_PRIVATE);
+        SharedPreferences sharedPre = context.getSharedPreferences("UserInfo", context.MODE_PRIVATE);
         token  = sharedPre.getString("access_token","");
-        SharedPreferences sharedPreUid = context.getSharedPreferences("Uid", context.MODE_PRIVATE);
-        uid  = sharedPreUid.getString("uid","");
+        uid  = sharedPre.getString("uid","");
+
         init();
         userInfoReq();
     }

@@ -43,7 +43,7 @@ public class SetUpActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.activity_set_up);
         ViewUtils.inject(this);
         context=SetUpActivity.this;
-        SharedPreferences sharedPre = context.getSharedPreferences("Phone", context.MODE_PRIVATE);
+        SharedPreferences sharedPre = context.getSharedPreferences("UserInfo", context.MODE_PRIVATE);
         phone = sharedPre.getString("phone", "");
 
         inin();

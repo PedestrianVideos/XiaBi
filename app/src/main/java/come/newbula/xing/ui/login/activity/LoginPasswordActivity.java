@@ -125,22 +125,14 @@ public class LoginPasswordActivity extends BaseActivity implements View.OnClickL
 
                             }
                         });
-                        SharedPreferences sharedialog = context.getSharedPreferences("Access_token", context.MODE_PRIVATE);
+                        SharedPreferences sharedialog = context.getSharedPreferences("UserInfo", context.MODE_PRIVATE);
                         SharedPreferences.Editor Convened = sharedialog.edit();
                         Convened.putString("access_token", loginBean.getAaa().getAccess_token().toString());
+                        Convened.putBoolean("isLogin",true);
+                        Convened.putString("phone",phone);
+                        Convened.putString("uid",loginBean.getData().getUid());
                         Convened.commit();
-                        SharedPreferences share = context.getSharedPreferences("IsLogin", context.MODE_PRIVATE);
-                        SharedPreferences.Editor Conven = share.edit();
-                        Conven.putBoolean("isLogin",true);
-                        Conven.commit();
-                        SharedPreferences sharePhone = context.getSharedPreferences("Phone", context.MODE_PRIVATE);
-                        SharedPreferences.Editor editPhone = sharePhone.edit();
-                        editPhone.putString("phone",phone);
-                        editPhone.commit();
-                        SharedPreferences shareuid = context.getSharedPreferences("Uid", context.MODE_PRIVATE);
-                        SharedPreferences.Editor editUid = shareuid.edit();
-                        editUid.putString("uid",loginBean.getData().getUid());
-                        editUid.commit();
+
                         startActivity(new Intent(context, HomeFragmentActivity.class));
                         finish();
                     }else {
