@@ -3,20 +3,19 @@
     package="come.newbula.xing">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
-     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.RECORD_VIDEO" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
-    <uses-permission android:name="android.permission.SEND_SMS"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
 
     <application
         android:name=".AppApplication"
@@ -27,8 +26,8 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
             android:name=".ui.homepage.HomeFragmentActivity"
-            android:theme="@style/AliyunVideoUIStytle"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AliyunVideoUIStytle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -70,13 +69,14 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ui.login.activity.LoginPasswordActivity" />
         <activity android:name=".ui.login.activity.FindPasswordActivity" />
-        <activity android:name=".ui.login.activity.RegisterActivity"></activity>
+        <activity android:name=".ui.login.activity.RegisterActivity" />
 
-        <!-- 搜索-->
+        <!-- 搜索 -->
         <activity
             android:name=".ui.findchallenge.activity.SearchActivity"
             android:configChanges="keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.video.ReleaseVideoActivity"></activity>
     </application>
 
 </manifest>

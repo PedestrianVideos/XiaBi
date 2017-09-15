@@ -42,6 +42,7 @@ import come.newbula.xing.ui.findchallenge.FindChallengeFragment;
 import come.newbula.xing.ui.login.LoginActivity;
 import come.newbula.xing.ui.pedestrianlist.PedestrianListFragment;
 import come.newbula.xing.ui.personinfo.PersonInFoFragment;
+import come.newbula.xing.ui.video.ReleaseVideoActivity;
 import come.newbula.xing.ui.video.VideoFragment;
 import come.newbula.xing.utils.Shanchuan;
 
@@ -604,12 +605,14 @@ public class HomeFragmentActivity extends AppCompatActivity implements View.OnCl
 
                 }else if(type ==  MediaActivity.RESULT_TYPE_RECORD){  //拍摄
 
-                    Toast.makeText(this,"文件路径为 "+
-                            data.getStringExtra(AliyunVideoRecorder.OUTPUT_PATH),Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this,"文件路径为 "+
+//                            data.getStringExtra(AliyunVideoRecorder.OUTPUT_PATH),Toast.LENGTH_SHORT).show();
 
                     String VideoPath = data.getStringExtra(AliyunVideoRecorder.OUTPUT_PATH);
                     Log.d("dou","  "+VideoPath);
-
+                    Intent intent=new Intent (mcontext, ReleaseVideoActivity.class);
+                    intent.putExtra("Url",VideoPath);
+                    startActivity(intent);
                     Shanchuan.getShanchuan(getApplicationContext()).ShanChuanShiPin(VideoPath);  //上传视频
                 }
             }else if(resultCode == Activity.RESULT_CANCELED){
