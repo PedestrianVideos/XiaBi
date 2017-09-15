@@ -19,4 +19,6 @@
     <color name="loopswitch_page_current">#ffffffff</color>
     <color name="loopswitch_page_other">#80ffffff</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="homepage_blue_bg_color">#0093C9</color>
+    <color name="common_dialog_color">#e4e5e5</color>
 </resources>

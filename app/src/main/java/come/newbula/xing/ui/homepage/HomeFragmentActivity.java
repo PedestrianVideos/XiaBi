@@ -1,14 +1,23 @@
 package come.newbula.xing.ui.homepage;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -18,6 +27,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aliyun.demo.crop.AliyunVideoCrop;
+import com.aliyun.demo.crop.MediaActivity;
+import com.aliyun.demo.recorder.AliyunVideoRecorder;
+import com.aliyun.struct.recorder.CameraType;
+import com.aliyun.struct.recorder.FlashType;
+import com.aliyun.struct.snap.AliyunSnapVideoParam;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -28,6 +43,7 @@ import come.newbula.xing.ui.login.LoginActivity;
 import come.newbula.xing.ui.pedestrianlist.PedestrianListFragment;
 import come.newbula.xing.ui.personinfo.PersonInFoFragment;
 import come.newbula.xing.ui.video.VideoFragment;
+import come.newbula.xing.utils.Shanchuan;
 
 
 /**
@@ -144,6 +160,18 @@ public class HomeFragmentActivity extends AppCompatActivity implements View.OnCl
     private Context mcontext;
     //是否登录
     private Boolean isLogin;
+
+    //拍摄
+    private  AliyunSnapVideoParam shotVideo;
+    //剪切
+    private  AliyunSnapVideoParam shearVideo;
+    //拍摄页面 请求Code
+    private final static  int shotCode = 0*100;
+    //剪切页面 请求Code
+    private final static  int shearCode = 0*101;
+
+    public Dialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,13 +179,28 @@ public class HomeFragmentActivity extends AppCompatActivity implements View.OnCl
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_home_page);
-        mcontext=HomeFragmentActivity.this;
+        mcontext=this;
         ViewUtils.inject(this);
         SharedPreferences sharedPre = mcontext.getSharedPreferences("IsLogin", mcontext.MODE_PRIVATE);
         isLogin = sharedPre.getBoolean("isLogin", false);
+
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.CAMERA,
+                        Manifest.permission.RECORD_AUDIO,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                },
+                0);
+
+
+
+        initQuPai();
+
         init();
 
     }
+
+
 
     private void init() {
         initView();
@@ -249,10 +292,8 @@ public class HomeFragmentActivity extends AppCompatActivity implements View.OnCl
                 break;
             case R.id.homeViodeRelative: //视频拍摄
 
-                Toast.makeText(mcontext,"此功能暂未开发",Toast.LENGTH_SHORT).show();
+                showPhotoDiaLog();
 
-//                setTabSelection(getString(R.string.video));
-//                curFragmentTag=getString(R.string.video);
                 break;
             case R.id.homePedestrianRelative: // 行人榜
                 setTabSelection(getString(R.string.pedestrian_list));
@@ -548,5 +589,146 @@ public class HomeFragmentActivity extends AppCompatActivity implements View.OnCl
         return super.onKeyDown(keyCode, event);
     }
 
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == shotCode || requestCode == shearCode){
+            if(resultCode == Activity.RESULT_OK && data!= null){
+                int type = data.getIntExtra(MediaActivity.RESULT_TYPE,0);
+                if(type ==  MediaActivity.RESULT_TYPE_CROP){   //裁剪
+
+                    String path = data.getStringExtra(AliyunVideoCrop.RESULT_KEY_CROP_PATH);
+                    Toast.makeText(this,"文件路径为 "+ path + " 时长为 " +
+                            data.getLongExtra(AliyunVideoCrop.RESULT_KEY_DURATION,0),Toast.LENGTH_SHORT).show();
+                    Log.d("dou","裁剪完成");
+
+                }else if(type ==  MediaActivity.RESULT_TYPE_RECORD){  //拍摄
+
+                    Toast.makeText(this,"文件路径为 "+
+                            data.getStringExtra(AliyunVideoRecorder.OUTPUT_PATH),Toast.LENGTH_SHORT).show();
+
+                    String VideoPath = data.getStringExtra(AliyunVideoRecorder.OUTPUT_PATH);
+                    Log.d("dou","  "+VideoPath);
+
+                    Shanchuan.getShanchuan(getApplicationContext()).ShanChuanShiPin(VideoPath);  //上传视频
+                }
+            }else if(resultCode == Activity.RESULT_CANCELED){
+                Toast.makeText(this,"用户取消拍摄",Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    /**
+     * 趣拍Diaolog
+     * */
+    public void showPhotoDiaLog()
+    {
+        //      photoPath = Constants.USER_NAME + "_" + System.currentTimeMillis() + ".jpg";
+        dialog = new Dialog(mcontext, R.style.image_select_dialog);
+        dialog.setContentView(R.layout.image_select_dialog);
+        dialog.getWindow().getAttributes().width = ViewPager.LayoutParams.MATCH_PARENT;
+        dialog.getWindow().getAttributes().height = ViewPager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
+        dialog.getWindow().setWindowAnimations(R.style.dialog_two_style);
+        TextView camera = (TextView)dialog.findViewById(R.id.camera);
+        //        camera.setOnClickListener(this);
+        TextView gallery = (TextView)dialog.findViewById(R.id.gallery);
+        //        gallery.setOnClickListener(this);
+        TextView cancel = (TextView)dialog.findViewById(R.id.cancel);
+        //        cancel.setOnClickListener(this);
+        dialog.show();
+        /**
+         * 从相册选取照片
+         */
+        gallery.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View arg0)
+            {
+                dialog.dismiss();
+                AliyunVideoRecorder.startRecordForResult(HomeFragmentActivity.this,shotCode,shotVideo);
+            }
+        });
+        /**
+         * 从相机拍摄照片
+         */
+        camera.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+                // 先验证手机是否有sdcard
+                dialog.dismiss();
+                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
+                {
+                    try
+                    {
+                        AliyunVideoCrop.startCropForResult(HomeFragmentActivity.this,shearCode,shearVideo);
+                    }
+                    catch (ActivityNotFoundException e)
+                    {
+                        Toast.makeText(mcontext, "没有找到储存目录", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else
+                {
+                    Toast.makeText(mcontext, "没有储存卡", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View arg0)
+            {
+                dialog.dismiss();
+            }
+        });
+    }
+
+
+
+
+    //初始化 趣拍 拍摄和剪切
+    private void initQuPai() {
+
+       shotVideo = new AliyunSnapVideoParam.Builder()
+                //设置录制分辨率，目前支持360p，480p，540p，720p
+//                .setResulutionMode(AliyunVideoRecorder.RESOLUTION_360P)
+                //设置视频比例，目前支持1:1,3:4,9:16
+//                .setRatioMode(AliyunVideoRecorder.RATIO_MODE_9_16)
+//                .setRecordMode(RecorderDemo.RECORD_MODE_AUTO) //设置录制模式，目前支持按录，点录和混合模式
+//                .setFilterList(eff_dirs) //设置滤镜地址列表,具体滤镜接口接收的是一个滤镜数组
+                .setBeautyLevel(80) //设置美颜度
+                .setBeautyStatus(true) //设置美颜开关
+                .setCameraType(CameraType.BACK) //设置前后置摄像头
+                .setFlashType(FlashType.ON) // 设置闪光灯模式
+                .setNeedClip(true) //设置是否需要支持片段录制
+                .setMaxDuration(10000) //设置最大录制时长 单位毫秒
+                .setMinDuration(1000) //设置最小录制时长 单位毫秒
+
+//                .setVideQuality(videoQuality) //设置视频质量
+//                .setGop(gop) //设置关键帧间隔
+                .build();
+
+
+      shearVideo = new AliyunSnapVideoParam.Builder()
+//                .setFrameRate(100) //设置帧率
+//                .setGop(1) //设置关键帧间隔
+//                .setCropMode(ScaleMode.PS) //设置裁剪模式，目前支持有黑边和无黑边两种
+//                .setVideQuality(VideoQuality.HD) //设置裁剪质量
+//                .setResulutionMode(AliyunSnapVideoParam.RESOLUTION_720P) //设置分辨率，目前支持360p，480p，540p，720p
+//                .setRatioMode(AliyunSnapVideoParam.RATIO_MODE_9_16)//设置裁剪比例 目前支持1:1,3:4,9:16
+                .setNeedRecord(true)//设置是否需要开放录制入口
+                .setMinVideoDuration(1000) //设置过滤的视频最小长度 单位毫秒
+                .setMaxVideoDuration(10000) //设置过滤的视频最大长度 单位毫秒
+                .setMinCropDuration(1000) //设置视频最小裁剪时间 单位毫秒
+                .build();
+
+    }
 
 }
